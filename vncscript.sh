@@ -75,3 +75,5 @@ EOF"
 bash -c "cat <<EOF >/home/$vnc_username/.local/share/keyrings/default
 Связка_ключей_по_умолчанию
 EOF"
+
+export DISPLAY=:0 && gsettings set org.gnome.desktop.remote-desktop.vnc auth-method 'password' && gsettings set org.gnome.desktop.remote-desktop.vnc enable true && gsettings set org.gnome.desktop.remote-desktop.rdp enable true && gsettings set org.gnome.desktop.remote-desktop.vnc view-only false && systemctl --user enable gnome-remote-desktop.service && systemctl --user start gnome-remote-desktop.service && sudo apt-get install gnome-connections -y
