@@ -2,14 +2,27 @@
 
 # Запрашиваем у пользователя значения
 read -p "Введите VNC пароль: " vnc_password
-read -p "Введите имя пользователя для RDP: " rdp_username
-read -p "Введите пароль для RDP: " rdp_password
+read -p "Введите имя пользователя для ПК: " vnc_username
+
+# Создаем необходимые директории и устанавливаем права доступа
+mkdir -p /home/$vnc_username/.local/share/keyrings
+chown -R $vnc_username:$vnc_username /home/$vnc_username/.local/share/keyrings
+
+# Настраиваем GDM
+bash -c "cat <<EOF >/etc/gdm3/custom.conf
+[daemon]
+AutomaticLoginEnable = true
+AutomaticLogin = $vnc_username
+TimedLoginEnable = true
+TimedLogin = $vnc_username
+TimedLoginDelay = 1
+EOF"
 
 # Создаем ключевую связку
-bash -c "cat <<EOF >/home/$USER/.local/share/keyrings/Связка_ключей_по_умолчанию.keyring
+bash -c "cat <<EOF >/home/$vnc_username/.local/share/keyrings/Связка_ключей_по_умолчанию.keyring
 [keyring]
 display-name=Связка ключей по умолчанию
-ctime=1676379301
+ctime=$(date +%s)
 mtime=0
 lock-on-idle=false
 lock-after=false
@@ -18,8 +31,8 @@ lock-after=false
 item-type=0
 display-name=GNOME Remote Desktop VNC password
 secret=$vnc_password
-mtime=1680778935
-ctime=1676379244
+mtime=$(date +%s)
+ctime=$(date +%s)
 
 [2:attribute0]
 name=xdg:schema
@@ -29,9 +42,9 @@ value=org.gnome.RemoteDesktop.VncPassword
 [3]
 item-type=0
 display-name=GNOME Remote Desktop RDP credentials
-secret={'username': <'$rdp_username'>, 'password': <'$rdp_password'>}
-mtime=1680778935
-ctime=1676379245
+secret={'username': '$vnc_username', 'password': '$vnc_password'}
+mtime=$(date +%s)
+ctime=$(date +%s)
 
 [3:attribute0]
 name=xdg:schema
@@ -40,7 +53,7 @@ value=org.gnome.RemoteDesktop.RdpCredentials
 EOF"
 
 # Создаем файл ключевой связки по умолчанию
-bash -c "cat <<EOF >/home/$USER/.local/share/keyrings/default
+bash -c "cat <<EOF >/home/$vnc_username/.local/share/keyrings/default
 Связка_ключей_по_умолчанию
 EOF"
 
