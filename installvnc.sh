@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Запрашиваем у пользователя значения
-read -p "Введите VNC пароль: " vnc_password
-read -p "Введите имя пользователя для ПК: " vnc_username
+read -p "Введите пароль который хотите использовать для VNC: " vnc_password
+read -p "Введите имя домашнего пользователя : " vnc_username
 
 # Создаем необходимые директории и устанавливаем права доступа
 mkdir -p /home/$vnc_username/.local/share/keyrings
