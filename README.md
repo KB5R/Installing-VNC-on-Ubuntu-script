@@ -21,5 +21,5 @@ systemctl --user start gnome-remote-desktop.service
 ```
 ## Далее
 ```
-sudo reboot
+reboot
 ```
