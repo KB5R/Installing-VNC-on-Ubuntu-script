@@ -1,5 +1,7 @@
 # Установка VNC Serever для Linux
-
+## WARNING 
+### Checked on
+### Ubuntu 22.04
 ## Быстрый старт 
 ```bash
 sudo apt update
