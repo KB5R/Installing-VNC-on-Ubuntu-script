@@ -1,6 +1,6 @@
 # Установка VNC Serever для Linux
 ## WARNING 
-### Checked on
+### Checked
 ### Ubuntu 22.04
 ## Быстрый старт 
 ```bash
